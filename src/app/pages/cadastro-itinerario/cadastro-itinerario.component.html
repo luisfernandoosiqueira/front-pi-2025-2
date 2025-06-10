@@ -1,0 +1,57 @@
+<!-- src/app/pages/cadastro-itinerario/cadastro-itinerario.component.html -->
+
+<div class="cadastro-container">
+  <header class="header">
+    <h1>{{ itinerario.id ? 'Editar Itinerário' : 'Novo Itinerário' }}</h1>
+    <button class="btn btn-link" (click)="cancelar()">Voltar</button>
+  </header>
+
+  <main class="main-content">
+    <form #formIt="ngForm" (ngSubmit)="onSubmit(formIt)" class="form-container">
+
+      <div class="form-group">
+        <label for="rota">Rota</label>
+        <select
+          id="rota"
+          name="rota"
+          required
+          [(ngModel)]="itinerario.rota"
+          class="form-control">
+          <option [ngValue]="null">Selecione a rota</option>
+          <option *ngFor="let r of rotas" [ngValue]="r">
+            {{ r.nome }} ({{ r.origem?.nomeBairro }} → {{ r.destino?.nomeBairro }})
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="dataAgendamento">Data e Hora</label>
+        <input
+          id="dataAgendamento"
+          name="dataAgendamento"
+          type="datetime-local"
+          required
+          [(ngModel)]="itinerario.dataAgendamento"
+          class="form-control"/>
+      </div>
+
+      <div class="button-group">
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="formIt.invalid">
+          {{ itinerario.id ? 'Atualizar' : 'Cadastrar' }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancelar()"
+          style="margin-left: 8px;">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <app-footer></app-footer>
+</div>
